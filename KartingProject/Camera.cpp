@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include <GL/glew.h>
 
 Camera::Camera(const int width, const int height, const glm::vec3& position)
 {
@@ -120,6 +121,14 @@ void Camera::ProcessMouseScroll(float yOffset)
 	{
 		FoVy = 90.0f;
 	}
+}
+
+void Camera::Reshape(int windowWidth, int windowHeight)
+{
+	width = windowWidth;
+	height = windowHeight;
+
+	glViewport(0, 0, windowWidth, windowHeight);
 }
 
 void Camera::ProcessMouseMovement(float xOffset, float yOffset, bool constrainPitch)

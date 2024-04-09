@@ -31,6 +31,8 @@ public:
     void ProcessKeyboard(ECameraMovementType direction, float deltaTime);
     void ProcessMouseScroll(float yOffset);
 
+	void Reshape(int windowWidth, int windowHeight);
+
 	void ProcessMouseMovement(float xOffset, float yOffset, bool constrainPitch = true);
 	void UpdateCameraVectors();
 
