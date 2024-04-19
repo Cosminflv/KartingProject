@@ -1,8 +1,10 @@
+#pragma once
+
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
-#include <glm.hpp>
+#include "Shader.h"
 
-enum class EMovementType
+enum class ECameraMovementType
 {
 	UNKNOWN,
 	FORWARD,
@@ -15,59 +17,61 @@ enum class EMovementType
 
 class Camera
 {
-private:
-    // Default camera values
-    const float zNEAR = 0.1f;
-    const float zFAR = 500.f;
-    const float YAW = -90.0f;
-    const float PITCH = 0.0f;
-    const float FOV = 45.0f;
-    glm::vec3 startPosition;
+public:
+
 
 public:
-    Camera(const int width, const int height, const glm::vec3& position);
-    ~Camera() = default;
+	Camera(const int width, const int height, const glm::vec3& position);
 
-    void Reset(int width, int height);
-    void Set(const int width, const int height, const glm::vec3& position);
-
-    // GETTERS
-    const glm::mat4 GetViewMatrix() const;
-    const glm::mat4 GetProjectionMatrix() const;
-
-
-    // PUBLIC METHODS
-    void MouseControl(float xpos, float ypos);
-    void ProcessKeyboard(EMovementType direction, float deltaTime);
-    void ProcessMouseScroll(float yOffset);
-
+	void Set(const int width, const int height, const glm::vec3& position);
+	void Reset(const int width, const int height);
 	void Reshape(int windowWidth, int windowHeight);
+
+	void Use(Shader& shader);
+
+	const glm::vec3 GetPosition() const;
+	const glm::mat4 GetViewMatrix() const;
+	const glm::mat4 GetProjectionMatrix() const;
+
+	void MouseControl(float xPos, float yPos);
+
+	void ProcessKeyboard(ECameraMovementType direction, float deltaTime);
+	void ProcessMouseScroll(float yOffset);
 
 	void ProcessMouseMovement(float xOffset, float yOffset, bool constrainPitch = true);
 	void UpdateCameraVectors();
 
+private:
+	const float zNEAR = 0.1f;
+	const float zFAR = 5000.f;
+	const float YAW = -90.0f;
+	const float PITCH = 0.0f;
+	const float FOV = 90.0f;
+	glm::vec3 startPosition;
+
 protected:
-    const float cameraSpeedFactor = 300.0f; //FA L MAI MARE SA SE MISTE MAI REPEDE
-    const float mouseSensitivity = 0.1f;
+	const float cameraSpeedFactor = 50.0f;
+	const float mouseSensitivity = 0.25f;
 
-    // Perspective properties
-    float zNear;
-    float zFar;
-    float FoVy;
-    int width;
-    int height;
-    bool isPerspective;
+protected:
+	int width;
+	int height;
+	glm::vec3 position;
 
-    glm::vec3 position;
-    glm::vec3 forward;
-    glm::vec3 right;
-    glm::vec3 up;
-    glm::vec3 worldUp;
+	float zNear;
+	float zFar;
+	float FoVy;
+	bool isPerspective;
 
-    // Euler Angles
-    float yaw;
-    float pitch;
+	glm::vec3 forward;
+	glm::vec3 right;
+	glm::vec3 up;
+	glm::vec3 worldUp;
 
-    bool bFirstMouseMove = true;
-    float lastX = 0.f, lastY = 0.f;
+protected:
+	float yaw;
+	float pitch;
+
+	bool bFirstMouseMove = true;
+	float lastX = 0.0f, lastY = 0.0f;
 };

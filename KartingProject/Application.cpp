@@ -1,6 +1,8 @@
 #include "Application.h"
 
+
 Shader Application::skyboxShader;
+Shader Application::terrainShader;
 Camera* Application::camera = nullptr;
 
 static void ProcessInput(GLFWwindow* window, Camera* camera, double deltaTime)
@@ -9,17 +11,17 @@ static void ProcessInput(GLFWwindow* window, Camera* camera, double deltaTime)
 		glfwSetWindowShouldClose(window, true);
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera->ProcessKeyboard(EMovementType::FORWARD, (float)deltaTime);
+		camera->ProcessKeyboard(ECameraMovementType::FORWARD, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera->ProcessKeyboard(EMovementType::BACKWARD, (float)deltaTime);
+		camera->ProcessKeyboard(ECameraMovementType::BACKWARD, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera->ProcessKeyboard(EMovementType::RIGHT, (float)deltaTime);
+		camera->ProcessKeyboard(ECameraMovementType::RIGHT, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera->ProcessKeyboard(EMovementType::LEFT, (float)deltaTime);
+		camera->ProcessKeyboard(ECameraMovementType::LEFT, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-		camera->ProcessKeyboard(EMovementType::UP, (float)deltaTime);
+		camera->ProcessKeyboard(ECameraMovementType::UP, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
-		camera->ProcessKeyboard(EMovementType::DOWN, (float)deltaTime);
+		camera->ProcessKeyboard(ECameraMovementType::DOWN, (float)deltaTime);
 
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
 	{
@@ -43,8 +45,9 @@ void Application::Run()
 	std::string resourcesFolder = localPath.string() + "\\Resources";
 
 	Skybox skybox(resourcesFolder, skyboxShader);
+	Terrain terrain(resourcesFolder, terrainShader);
 
-	Render(skybox);
+	Render(skybox, terrain);
 }
 
 Application::~Application()
@@ -89,7 +92,7 @@ bool Application::InitWindow()
 }
 
 
-void Application::Render(Skybox& skybox)
+void Application::Render(Skybox& skybox, Terrain& terrain)
 {
 	while (!glfwWindowShouldClose(window))
 	{
@@ -110,6 +113,7 @@ void Application::Render(Skybox& skybox)
 
 		// Render here
 		skybox.Render(camera, skyboxShader);
+		terrain.Render(camera, terrainShader);
 
 		// Swap front and back buffers
 		glfwSwapBuffers(window);

@@ -10,6 +10,7 @@
 #pragma comment (lib, "OpenGL32.lib")
 
 #include "Skybox.h"
+#include "Terrain.h"
 #include <glfw3.h>
 
 const unsigned int SCR_WIDTH = 1920;
@@ -32,7 +33,7 @@ public:
 private:
 	bool InitWindow();
 
-	void Render(Skybox& skybox);
+	void Render(Skybox& skybox, Terrain& terrain);
 
 	static void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
 	static void MouseCallback(GLFWwindow* window, double xpos, double ypos);
@@ -45,8 +46,6 @@ private:
 
 private:
 	static Shader skyboxShader;
-	/*static Shader mapShader;
-	static Shader rainbowShader;
-	static Shader terrainShader;*/
+	static Shader terrainShader;
 	Shader signShader;
 };
