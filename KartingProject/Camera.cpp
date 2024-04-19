@@ -82,26 +82,26 @@ void Camera::MouseControl(float xpos, float ypos)
 	ProcessMouseMovement(xChange, yChange);
 }
 
-void Camera::ProcessKeyboard(ECameraMovementType direction, float deltaTime)
+void Camera::ProcessKeyboard(EMovementType direction, float deltaTime)
 {
 	float velocity = (float)(cameraSpeedFactor * deltaTime);
 	switch (direction) {
-	case ECameraMovementType::FORWARD:
+	case EMovementType::FORWARD:
 		this->position += this->forward * velocity;
 		break;
-	case ECameraMovementType::BACKWARD:
+	case EMovementType::BACKWARD:
 		this->position -= this->forward * velocity;
 		break;
-	case ECameraMovementType::LEFT:
+	case EMovementType::LEFT:
 		this->position -= this->right * velocity;
 		break;
-	case ECameraMovementType::RIGHT:
+	case EMovementType::RIGHT:
 		this->position += this->right * velocity;
 		break;
-	case ECameraMovementType::UP:
+	case EMovementType::UP:
 		this->position += this->up * velocity;
 		break;
-	case ECameraMovementType::DOWN:
+	case EMovementType::DOWN:
 		this->position -= this->up * velocity;
 		break;
 	}

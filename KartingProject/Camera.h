@@ -2,7 +2,16 @@
 #include <gtc/type_ptr.hpp>
 #include <glm.hpp>
 
-#include "ECameraMovementType.cpp"
+enum class EMovementType
+{
+	UNKNOWN,
+	FORWARD,
+	BACKWARD,
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+};
 
 class Camera
 {
@@ -17,6 +26,7 @@ private:
 
 public:
     Camera(const int width, const int height, const glm::vec3& position);
+    ~Camera() = default;
 
     void Reset(int width, int height);
     void Set(const int width, const int height, const glm::vec3& position);
@@ -28,7 +38,7 @@ public:
 
     // PUBLIC METHODS
     void MouseControl(float xpos, float ypos);
-    void ProcessKeyboard(ECameraMovementType direction, float deltaTime);
+    void ProcessKeyboard(EMovementType direction, float deltaTime);
     void ProcessMouseScroll(float yOffset);
 
 	void Reshape(int windowWidth, int windowHeight);
