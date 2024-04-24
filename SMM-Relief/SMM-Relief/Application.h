@@ -13,6 +13,7 @@
 #include "Skybox.h"
 #include "Raceway.h"
 #include "Terrain.h"
+#include "Kart.h"
 #include "ProcessInput.cpp"
 
 const unsigned int SCR_WIDTH = 1920;
@@ -35,7 +36,7 @@ public:
 private:
     bool InitWindow();
 
-    void Render(Skybox& skybox, Raceway& raceway, Terrain& terrain);
+    void Render(Skybox& skybox, Raceway& raceway, Terrain& terrain, Kart& kart);
 
     static void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
     static void MouseCallback(GLFWwindow* window, double xpos, double ypos);

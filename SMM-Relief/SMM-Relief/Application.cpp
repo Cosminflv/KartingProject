@@ -21,8 +21,9 @@ void Application::Run()
 	Skybox skybox(resourcesFolder, skyboxShader);
 	Raceway raceway(resourcesFolder, mapShader);
 	Terrain terrain(resourcesFolder, terrainShader);
+	Kart kart(resourcesFolder, signShader);
 
-	Render(skybox, raceway, terrain);
+	Render(skybox, raceway, terrain, kart);
 }
 
 Application::~Application()
@@ -66,10 +67,24 @@ bool Application::InitWindow()
 	return true;
 }
 
-void Application::Render(Skybox& skybox, Raceway& raceway, Terrain& terrain)
+void keyInput(GLFWwindow* window, Kart& kart)
+{
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		kart.ProcessKeyboard(K_FORWARD, 0.04f);
+	else if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		kart.ProcessKeyboard(K_LEFT, 0.04f);
+	else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		kart.ProcessKeyboard(K_RIGHT, 0.04f);
+	else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		kart.ProcessKeyboard(K_BACKWARD, 0.04f);
+}
+
+void Application::Render(Skybox& skybox, Raceway& raceway, Terrain& terrain, Kart& kart)
 {
 	while (!glfwWindowShouldClose(window))
 	{
+		keyInput(window, kart);
+
 		// Per-frame time logic
 		double currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
@@ -88,6 +103,7 @@ void Application::Render(Skybox& skybox, Raceway& raceway, Terrain& terrain)
 		// Render here
 		raceway.Render(camera, mapShader);
 		terrain.Render(camera, terrainShader);
+		kart.Render(camera, signShader);
 		skybox.Render(camera, skyboxShader);
 
 		// Swap front and back buffers
