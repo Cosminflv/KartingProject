@@ -103,7 +103,7 @@ void Application::Render(Skybox& skybox, Raceway& raceway, Terrain& terrain, Kar
 		// Render here
 		raceway.Render(camera, mapShader);
 		terrain.Render(camera, terrainShader);
-		kart.Render(camera, signShader);
+		kart.Render(camera, mapShader);
 		skybox.Render(camera, skyboxShader);
 
 		// Swap front and back buffers
