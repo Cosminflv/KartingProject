@@ -13,7 +13,7 @@ void Application::Run()
 		return;
 	}
 
-	camera = new Camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 100.0f, 100.0f));
+	camera = new Camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(-10.0f, 11.0f, -45.0f));
 
 	std::filesystem::path localPath = std::filesystem::current_path();
 	std::string resourcesFolder = localPath.string() + "\\Resources";
@@ -105,6 +105,9 @@ void Application::Render(Skybox& skybox, Raceway& raceway, Terrain& terrain, Kar
 		terrain.Render(camera, terrainShader);
 		kart.Render(camera, mapShader);
 		skybox.Render(camera, skyboxShader);
+
+		glm::vec3 kartPosition = kart.GetPosition();
+		camera->UpdatePosition(kartPosition);
 
 		// Swap front and back buffers
 		glfwSwapBuffers(window);

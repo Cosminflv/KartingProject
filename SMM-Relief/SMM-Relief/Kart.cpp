@@ -5,12 +5,13 @@ Kart::Kart(const std::string& resourcesFolder, Shader& kartShader) : kartMesh("k
 	InitKart(resourcesFolder, kartShader);
 
 	kartShader.Use();
-	kartShader.SetVec3("lightColor", glm::vec3(0.7f, 0.7f, 0.7f));
+	kartShader.SetVec3("lightColor", glm::vec3(0.7f, 0.7f, 0.0f));
 
 	MovementSpeed = 1.50f;
 	TurningSpeed = 1.0f;
 	WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	updateFront();
+	m_listener = nullptr;
 }
 
 void Kart::Render(Camera* camera, Shader& kartShader)
@@ -112,6 +113,19 @@ void Kart::ProcessKeyboard(Direction direction, float deltaTime)
 	}
 
 	//updateFront();
+	auto coordonates = kartMesh.GetPosition();
+	if (m_listener != nullptr)
+		m_listener->OnKartPositionChanged(coordonates.x, coordonates.y, coordonates.z);
+}
+
+inline void Kart::AddListener(IKartListener* listener)
+{
+	m_listener = listener;
+}
+
+inline void Kart::RemoveListener()
+{
+	m_listener = nullptr;
 }
 
 void Kart::InitKart(const std::string& resourcesFolder, Shader& kartShader)

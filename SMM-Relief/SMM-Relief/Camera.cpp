@@ -50,6 +50,13 @@ void Camera::Use(Shader& shader)
 	shader.SetVec3("viewPos", position);
 }
 
+void Camera::UpdatePosition(glm::vec3 pos)
+{
+	position.x = pos.x;
+	position.z = pos.z;
+	UpdateCameraVectors();
+}
+
 const glm::vec3 Camera::GetPosition() const
 {
 	return position;
@@ -167,4 +174,12 @@ void Camera::UpdateCameraVectors()
 
 	right = glm::normalize(glm::cross(forward, worldUp));
 	up = glm::normalize(glm::cross(right, forward));
+}
+
+void Camera::OnKartPositionChanged(float x, float y, float z)
+{
+	position.x = x;
+	position.y = y;
+	position.z = z;
+	UpdateCameraVectors();
 }

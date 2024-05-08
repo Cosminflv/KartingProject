@@ -3,8 +3,9 @@
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
 #include "Shader.h"
+#include "IKartListener.h"
 
-class Camera
+class Camera : public IKartListener
 {
 public:
     enum class CameraMovementType
@@ -26,6 +27,7 @@ public:
     void Reshape(int windowWidth, int windowHeight);
 
     void Use(Shader& shader);
+    void UpdatePosition(glm::vec3 pos);
 
     const glm::vec3 GetPosition() const;
     const glm::mat4 GetViewMatrix() const;
@@ -38,6 +40,7 @@ public:
 
     void ProcessMouseMovement(float xOffset, float yOffset, bool constrainPitch = true);
     void UpdateCameraVectors();
+    void OnKartPositionChanged(float x, float y, float z) override;
 
 private:
     const float zNEAR = 0.1f;
