@@ -106,7 +106,7 @@ void Application::Render(Skybox& skybox, Raceway& raceway, Terrain& terrain, Kar
 		kart.Render(camera, mapShader);
 		skybox.Render(camera, skyboxShader);
 
-		glm::vec3 kartPosition = kart.GetPosition();
+	    glm::vec3 kartPosition = kart.GetPosition();
 		camera->UpdatePosition(kartPosition);
 
 		// Swap front and back buffers

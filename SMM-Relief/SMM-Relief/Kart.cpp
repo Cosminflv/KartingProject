@@ -109,7 +109,7 @@ void Kart::ProcessKeyboard(Direction direction, float deltaTime)
 
 		kartMesh.SetPosition(newPosition);
 
-		accelerateDir = 1;
+		//accelerateDir = 1;
 	}
 
 	//updateFront();
@@ -137,7 +137,7 @@ void Kart::InitKart(const std::string& resourcesFolder, Shader& kartShader)
 
 	kartMesh.SetScale(glm::vec3(0.05f, 0.05f, 0.05f));
 	kartMesh.SetPosition(glm::vec3(-10.0f, 8.0f, -45.0f));
-	kartMesh.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
+	//kartMesh.SetRotation(glm::vec3(0.0f, 0.0f, 0.0f));
 	kartMesh.InitVAO();
 }
 
