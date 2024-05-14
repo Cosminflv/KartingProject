@@ -109,5 +109,11 @@
     <None Include="Skybox.shader">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="ShadowMapping.shader">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ShadowMappingDepth.shader">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

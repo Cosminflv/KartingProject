@@ -23,6 +23,7 @@ static double deltaTime = 0.0f;
 static double lastFrame = 0.0f;
 
 static glm::vec3 lightIntensityValue(0.6f);
+static glm::vec3 lightPos(-2.0f, 4.0f, -1.0f);
 static float skyLight = lightIntensityValue.x;
 
 class Application
@@ -36,6 +37,7 @@ public:
 private:
     bool InitWindow();
 
+    void SetupShadowMapping();
     void Render(Skybox& skybox, Raceway& raceway, Terrain& terrain, Kart& kart);
 
     static void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
@@ -48,9 +50,16 @@ private:
     static Camera* camera;
 
 private:
-    static Shader skyboxShader;
-    static Shader mapShader;
-    static Shader rainbowShader;
-    static Shader terrainShader;
-    Shader signShader;
+     static Shader skyboxShader;
+     static Shader mapShader;
+     static Shader rainbowShader;
+     static Shader terrainShader;
+     static Shader kartShader;
+
+private:
+    // Shadow mapping related variables
+    GLuint depthMapFBO;
+    GLuint depthMap;
+    glm::mat4 lightSpaceMatrix;
+    Shader shadowShader;
 };

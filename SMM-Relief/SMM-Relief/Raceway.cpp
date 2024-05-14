@@ -20,7 +20,7 @@ void Raceway::Render(Camera* pCamera, Shader& mapShader)
 
 void Raceway::InitMap(const std::string& resourcesFolder, Shader& mapShader)
 {
-	mapShader.Set("Texture.shader");
+	mapShader.Set("Map.shader");
 
 	mapTexture = CreateTexture(resourcesFolder + "\\MapTexture\\circuit.jpg");
 	mapShader.SetInt("racetrack", 1);

@@ -21,6 +21,8 @@ public:
 	ShaderSource Source;
 	unsigned int ShaderIndex;
 
+
+	void Set(const std::string& sourceFilePath, const std::string& shadowVertexFilePath, const std::string& shadowFragmentFilePath);
 	void Set(const std::string& sourceFilePath);
 	void Use();
 	void Delete();
@@ -32,6 +34,8 @@ public:
 
 protected:
 	ShaderSource ParseShader(const std::string& filePath);
+	ShaderSource ParseShader(const std::string& filePath, const std::string& shadowFilePath);
+	
 	unsigned int CompileShader(unsigned int type, const std::string& source);
 	unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
 };

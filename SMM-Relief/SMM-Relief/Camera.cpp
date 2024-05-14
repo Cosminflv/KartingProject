@@ -43,6 +43,7 @@ void Camera::Reshape(int windowWidth, int windowHeight)
 
 void Camera::Use(Shader& shader)
 {
+	//TODO: projection TREBUIE DAT MAI SUS NU MAI FOLOSI CAMERA
 	glm::mat4 projection = GetProjectionMatrix();
 	glm::mat4 view = GetViewMatrix();
 	shader.SetMat4("projection", projection);

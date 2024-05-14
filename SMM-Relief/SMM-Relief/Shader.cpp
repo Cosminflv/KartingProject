@@ -1,5 +1,27 @@
 #include "Shader.h"
 
+void Shader::Set(const std::string& sourceFilePath, const std::string& shadowVertexFilePath, const std::string& shadowFragmentFilePath)
+{
+	ShaderSource source = ParseShader(sourceFilePath);
+	ShaderSource shadowSource = ParseShader(shadowVertexFilePath, shadowFragmentFilePath);
+
+	// Create main shader program
+	ShaderIndex = CreateShader(source.VertexSource, source.FragmentSource);
+
+	// Create shadow mapping shader program
+	unsigned int shadowShaderIndex = CreateShader(shadowSource.ShadowVertexSource, shadowSource.ShadowFragmentSource);
+
+	// Attach shadow mapping shaders to main shader program
+	glAttachShader(ShaderIndex, shadowShaderIndex);
+
+	// Link the shader program
+	glLinkProgram(ShaderIndex);
+
+	// Delete the shadow mapping shaders as they are no longer needed
+	//glDeleteShader(shadowVertexShader);
+	//glDeleteShader(shadowFragmentShader);
+}
+
 void Shader::Set(const std::string& sourceFilePath)
 {
 	ShaderSource source = ParseShader(sourceFilePath);
@@ -64,6 +86,50 @@ ShaderSource Shader::ParseShader(const std::string& filePath)
 		}
 	}
 	return { ss[0].str(), ss[1].str() };
+}
+
+ShaderSource Shader::ParseShader(const std::string& filePath, const std::string& shadowFilePath)
+{
+	std::ifstream fin(filePath);
+	std::ifstream shadowFin(shadowFilePath);
+
+	std::string line;
+	std::stringstream ss[4]; // One for each shader stage
+	ShaderType type = ShaderType::NONE;
+
+	// Read main shader file
+	while (getline(fin, line))
+	{
+		if (line.find("#shader") != std::string::npos)
+		{
+			if (line.find("vertex") != std::string::npos)
+				type = ShaderType::VERTEX;
+			else if (line.find("fragment") != std::string::npos)
+				type = ShaderType::FRAGMENT;
+		}
+		else
+		{
+			ss[static_cast<int>(type)] << line << '\n';
+		}
+	}
+
+	// Read shadow mapping shader file
+	while (getline(shadowFin, line))
+	{
+		if (line.find("#shader") != std::string::npos)
+		{
+			if (line.find("vertex") != std::string::npos)
+				type = ShaderType::VERTEX;
+			else if (line.find("fragment") != std::string::npos)
+				type = ShaderType::FRAGMENT;
+		}
+		else
+		{
+			ss[static_cast<int>(type)] << line << '\n';
+		}
+	}
+
+	return { ss[0].str(), ss[1].str(), ss[2].str(), ss[3].str() };
 }
 
 unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
