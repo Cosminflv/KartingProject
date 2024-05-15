@@ -14,6 +14,8 @@ void Terrain::Render(Camera* pCamera, Shader& terrainShader)
 	pCamera->UpdateCameraVectors();
 	pCamera->Use(terrainShader);
 
+	//terrainShader.SetMat4("view", viewMatrix);
+	//terrainShader.SetMat4("projection", projectionMatrix);
 	glBindTexture(GL_TEXTURE_2D, terrainTexture);
 
 	// Render multiple instances of the terrain

@@ -9,7 +9,7 @@ public:
 	Terrain() = default;
 	Terrain(const std::string& resourcesFolder, Shader& mapShader);
 
-	void Render(Camera* pCamera, Shader& mapShader);
+	void  Render(Camera* pCamera, Shader& terrainShader);
 
 private:
 	void InitMap(const std::string& resourcesFolder, Shader& mapShader);

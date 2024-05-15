@@ -8,9 +8,10 @@ Raceway::Raceway(const std::string& resourcesFolder, Shader& mapShader) : map("r
 	mapShader.SetVec3("lightColor", glm::vec3(0.6f, 0.6f, 0.6f));
 }
 
-void Raceway::Render(Camera* pCamera, Shader& mapShader)
+void Raceway::Render(Camera* pCamera, const glm::mat4& lightSpaceMatrix, Shader& mapShader)
 {
 	mapShader.Use();
+	mapShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
 	pCamera->UpdateCameraVectors();
 	pCamera->Use(mapShader);
 

@@ -9,7 +9,7 @@ public:
 	Raceway() = default;
 	Raceway(const std::string& resourcesFolder, Shader& mapShader);
 
-	void Render(Camera* pCamera, Shader& mapShader);
+	void Render(Camera* pCamera, const glm::mat4& lightSpaceMatrix, Shader& mapShader);
 
 private:
 	void InitMap(const std::string& resourcesFolder, Shader& mapShader);

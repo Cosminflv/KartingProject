@@ -1,4 +1,4 @@
-#include "Application.h"
+﻿#include "Application.h"
 
 Camera* Application::camera = nullptr;
 Shader Application::skyboxShader;
@@ -109,6 +109,8 @@ void Application::SetupShadowMapping()
 
 void Application::Render(Skybox& skybox, Raceway& raceway, Terrain& terrain, Kart& kart)
 {
+	glm::mat4 viewMatrix = camera->GetViewMatrix();
+	glm::mat4 projectionMatrix = camera->GetProjectionMatrix();
 	while (!glfwWindowShouldClose(window))
 	{
 		keyInput(window, kart);
@@ -136,11 +138,17 @@ void Application::Render(Skybox& skybox, Raceway& raceway, Terrain& terrain, Kar
 		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
 		glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
+		// Legătura cu framebuffer-ul pentru maparea umbrelor
+		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		glClear(GL_DEPTH_BUFFER_BIT);
 		mapShader.Use();
 		mapShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
 
 		// Render here
-		raceway.Render(camera, mapShader);//TODO: IN LOC DE CAMERA DA-I MATRICEA DE PROIECTIE PE BAZA POZITIEI SURSEI DE LUMINA SI DIRECTIEI
+		raceway.Render(camera, lightSpaceMatrix, mapShader);// done i guess? TODO: IN LOC DE CAMERA DA-I MATRICEA DE PROIECTIE PE BAZA POZITIEI SURSEI DE LUMINA SI DIRECTIEI
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 		terrain.Render(camera, terrainShader); //TODO: MATRICEA DE VIEW SI MATRICEA DE PROIECTIE IN LOC DE CAMERA
 		kart.Render(camera, mapShader); //TODO: TWO SHADERS PER OBJ ONE FOR LIGHTSOURCE AND THE OTHER FOR 
 		skybox.Render(camera, skyboxShader);
