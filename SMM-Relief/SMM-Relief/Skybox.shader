@@ -20,6 +20,9 @@ out vec4 FragColor;
 
 in vec3 TexCoords;
 uniform vec3 lightColor;
+uniform vec3 lightPosition;
+uniform vec3 lightDirection;
+uniform float lightDistance;
 
 uniform samplerCube skybox;
 

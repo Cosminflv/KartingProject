@@ -9,6 +9,9 @@ Skybox::Skybox(const std::string& resourcesFolder, Shader& skyboxShader)
 
 	skyboxShader.Use();
 	skyboxShader.SetVec3("lightColor", glm::vec3(0.6f, 0.6f, 0.6f));
+	skyboxShader.SetVec3("lightPos", glm::vec3(10.0f, 15.0f, 10.0f));
+	skyboxShader.SetVec3("lightDirection", glm::vec3(-0.2f, -1.0f, -0.3f));
+	skyboxShader.SetFloat("lightDistance", 100.0f);
 }
 
 void Skybox::Render(Camera* pCamera, Shader& skyboxShader)

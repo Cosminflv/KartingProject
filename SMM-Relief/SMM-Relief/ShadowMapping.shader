@@ -40,6 +40,8 @@ uniform sampler2D shadowMap;
 
 uniform vec3 lightPos;
 uniform vec3 viewPos;
+uniform vec3 lightDirection;
+uniform float lightDistance;
 
 float ShadowCalculation(vec4 fragPosLightSpace)
 {

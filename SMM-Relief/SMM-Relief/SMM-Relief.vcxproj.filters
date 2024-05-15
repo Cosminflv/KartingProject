@@ -115,5 +115,11 @@
     <None Include="ShadowMappingDepth.shader">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="ShadowMapping.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ShadowMapping.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

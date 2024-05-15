@@ -129,6 +129,15 @@ void Application::Render(Skybox& skybox, Raceway& raceway, Terrain& terrain, Kar
 		ProcessInput(window, camera, deltaTime);
 
 		//TODO: REDENDER TWICE
+		glm::vec3 lightPos(10.0f, 15.0f, 10.0f);
+		glm::vec3 lightDir = glm::normalize(glm::vec3(-0.2f, -1.0f, -0.3f));
+		glm::mat4 lightView = glm::lookAt(lightPos, lightPos + lightDir, glm::vec3(0.0f, 1.0f, 0.0f));
+		float near_plane = 1.0f, far_plane = 100.0f;
+		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+		glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+		mapShader.Use();
+		mapShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
 
 		// Render here
 		raceway.Render(camera, mapShader);//TODO: IN LOC DE CAMERA DA-I MATRICEA DE PROIECTIE PE BAZA POZITIEI SURSEI DE LUMINA SI DIRECTIEI
